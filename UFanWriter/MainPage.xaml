@@ -6,8 +6,163 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    
+    <Page.Background>
+        <AcrylicBrush TintColor="#CC000000" Opacity="1" BackgroundSource="HostBackdrop" />
+    </Page.Background>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
 
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Click="SidebarBtn_Click" Background="Black" Foreground="White">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;"/>
+            </Button>
+
+            <Grid x:Name="DraggableTitlebar"
+                  Grid.Column="1"
+                  Background="Black">
+
+                <TextBlock Text="FanWriter" Grid.Column="1" VerticalAlignment="Center" Margin="12,0,0,0" Foreground="White"></TextBlock>
+            </Grid>
+
+        </Grid>
+
+
+        <SplitView Name="SV_Sidebar"
+                   DisplayMode="Inline"
+                   OpenPaneLength="250"
+                   UseSystemFocusVisuals="True"
+                   Grid.Row="1">
+            <SplitView.Pane>
+                <Grid>
+                    <Grid.Background>
+                        <AcrylicBrush TintColor="#CC000000"/>
+                    </Grid.Background>
+
+                    <ListView HorizontalContentAlignment="Stretch"
+                              VerticalContentAlignment="Stretch"
+                              ItemClick="Sidebar_ItemClick"
+                              IsItemClickEnabled="True">
+                        
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Grid Name="MenuProjects" HorizontalAlignment="Stretch">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEC50;" Margin="16,0,16,0" HorizontalAlignment="Left" ></FontIcon>
+                                <TextBlock Text="Projects" Grid.Column="1" HorizontalAlignment="Center"></TextBlock>
+                            </Grid>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Grid Name="MenuPrompts" HorizontalAlignment="Stretch">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE82F;" Margin="16,0,16,0" HorizontalAlignment="Left" ></FontIcon>
+                                <TextBlock Text="Prompts" Grid.Column="1" HorizontalAlignment="Center"></TextBlock>
+                            </Grid>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Grid Name="MenuTimer" HorizontalAlignment="Stretch">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE823;" Margin="16,0,16,0" HorizontalAlignment="Left" ></FontIcon>
+                                <TextBlock Text="Timer" Grid.Column="1" HorizontalAlignment="Center"></TextBlock>
+                            </Grid>
+                        </ListViewItem>
+
+                    </ListView>
+
+                    <Button Name="SettingsBtn"
+                                    HorizontalAlignment="Stretch" 
+                                    Foreground="White" 
+                                    Background="#33FFFFFF"
+                                    FocusVisualPrimaryBrush="#FFB9B9B9"
+                                    HorizontalContentAlignment="Stretch" VerticalAlignment="Bottom">
+                        <Grid HorizontalAlignment="Stretch">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;" Margin="16,0,16,0" HorizontalAlignment="Left" ></FontIcon>
+                            <TextBlock Text="Settings" Grid.Column="1" HorizontalAlignment="Center"></TextBlock>
+                        </Grid>
+
+                        <Button.Flyout>
+                            <Flyout Closing="Flyout_Closing">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Paper colour picker -->
+                                    <TextBlock Text="Paper colour" Grid.Row="0"></TextBlock>
+                                    <Button Grid.Row="0" Grid.Column="1">
+                                        <FontIcon Name="PaperColourBtn" FontFamily="Segoe MDL2 Assets" Glyph="&#xE790;"></FontIcon>
+                                        <Button.Flyout>
+                                            <Flyout>
+                                                <ColorPicker Name="PaperColorPicker" ColorChanged="PaperColorPicker_ColorChanged"></ColorPicker>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+
+                </Grid>
+            </SplitView.Pane>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="48"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid x:Name="ToolbarGrid"
+                      Background="Transparent"
+                      Margin="8"
+                      MaxWidth="1024">
+
+                    <ListView x:Name="UserPhotosListView"
+                              ScrollViewer.HorizontalScrollMode="Enabled"
+                              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                              ScrollViewer.IsHorizontalRailEnabled="True"
+                              ItemTemplate="{StaticResource ForegroundGlyphDefaultTemplate}">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+
+                        <ListViewItem>Hello</ListViewItem>
+                        <ListViewItem>Hello</ListViewItem>
+                        <ListViewItem>Hello</ListViewItem>
+                        <ListViewItem>Hello</ListViewItem>
+                        <ListViewItem>Hello</ListViewItem>
+                        <ListViewItem>Hello</ListViewItem>
+                    </ListView>
+                </Grid>
+
+                <RichEditBox x:Name="MainTextBlock"
+                             Grid.Row="1"
+                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                             Background="White" 
+                             Margin="8,0,8,8"
+                             MaxWidth="1024"
+                             TextWrapping="Wrap"></RichEditBox>
+                
+            </Grid>
+
+        </SplitView>
     </Grid>
 </Page>
